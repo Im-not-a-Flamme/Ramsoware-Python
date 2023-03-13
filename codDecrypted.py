@@ -1,26 +1,20 @@
-import os; ##import biblioteca para automacoes pc
-from cryptography.fernet import Fernet ##importando modulo da bibloteca de criptografia / descriptografia
+import os  # Importe a biblioteca os para trabalhar com arquivos e diretórios
+from cryptography.fernet import Fernet  # Importe o módulo Fernet para criptografia e descriptografia
 
+key_path = "chave.key"  # Defina o caminho para o arquivo da chave
+exclude_files = ["ramsoware.py", key_path, "codDecrypted.py"]  # Defina uma lista de arquivos a serem excluídos da descriptografia
 
-files = []; ##array de arquivos
+with open(key_path, "rb") as f:  # Abra o arquivo da chave em modo de leitura binária
+    key = f.read()  # Armazene a chave lida do arquivo em uma variável
 
-key = Fernet.generate_key() ##variavel para armazenar a chave de descriptografia
+for file in os.listdir():  # Para cada arquivo no diretório atual...
+    if file in exclude_files or not os.path.isfile(file):  # Verifique se o arquivo deve ser excluído ou não é um arquivo
+        continue  # Pule para o próximo arquivo se necessário
 
-with open("chave.key", "rb") as key: ##estrutura para ler o arquivo da chave e armazena-la em uma var
-    secret_key = key.read()
+    with open(file, "rb") as f:  # Abra o arquivo em modo de leitura binária
+        content = f.read()  # Armazene o conteúdo lido do arquivo em uma variável
 
-for file in os.listdir(): ##estrutura for para listar os diretorios
-    if file == "ramsoware.py" or file == "chave.key" or file == "codDecrypted.py": ##esrutura de condicao para nn descriptografar estes arquivos
-        continue
-    if os.path.isfile(file): ##estrutura de condicao para listar apenas arquivos
-        files.append(file) ##preencher array files com os arquivos
+    content_decrypted = Fernet(key).decrypt(content)  # Descriptografe o conteúdo do arquivo usando a chave
 
-for file in files: 
-    with open(file, "rb") as arquivo: ##estrutura para ler todos os arquivos 
-        conteudo = arquivo.read() ## variavel com os arquivos read
-
-    conteudo_decrypted = Fernet(secret_key).decrypt(conteudo) ##armazenando em var e descriptografando todos os arquivos
-    with open(file, "wb") as arquivo: ##estrutura junto com o 'for' para abrir e escrever em todos os arquivos
-        arquivo.write(conteudo_decrypted) ##escrever conteudos na var 'conteudo_decriypted' - que possui todos arquivos descriptografados
-
-
+    with open(file, "wb") as f:  # Abra o arquivo em modo de gravação binária
+        f.write(content_decrypted)  # Escreva o conteúdo descriptografado no arquivo
