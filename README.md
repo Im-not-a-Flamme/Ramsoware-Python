@@ -1,2 +1,2 @@
-# Ramsoware-Python
+# Ransoware-Python
 Este é um script Python que utiliza a biblioteca "cryptography" para criptografar arquivos no computador do usuário. O código gera uma chave de criptografia, cria um arquivo para armazenar a chave e busca arquivos no diretório atual para criptografá-los. O código também verifica que alguns arquivos específicos não sejam criptografados. Após a criptografia dos arquivos, uma mensagem é exibida ao usuário informando que o processo foi concluído. É importante lembrar que a chave de criptografia deve ser armazenada com segurança para que a decodificação dos arquivos seja possível posteriormente.
